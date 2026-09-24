@@ -100,7 +100,7 @@ a{text-decoration:none;color:inherit}
 .device-table td,.controls-table td{padding:13px 16px;border-bottom:1px solid var(--border);font-size:10px;color:#cbd5e1;vertical-align:middle}
 .device-table tr:last-child td,.controls-table tr:last-child td{border-bottom:0}
 .device-row{cursor:pointer}
-.device-row:hover td{background:#fbfdff}
+.device-row:hover td{background:#131d2b}
 
 .device-cell{display:flex;align-items:center;gap:11px;min-width:190px}
 .device-icon{width:38px;height:38px;border-radius:9px;background:#15294a;color:#60a5fa;display:grid;place-items:center;font-size:12px;font-weight:800}
@@ -110,12 +110,12 @@ a{text-decoration:none;color:inherit}
 
 .status-badge,.policy-badge,.source-badge{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 8px;border-radius:999px;font-size:8px;font-weight:750;white-space:nowrap}
 .status-badge::before{content:"";width:5px;height:5px;border-radius:50%}
-.status-online{background:var(--green-soft);color:#15803d}
+.status-online{background:var(--green-soft);color:#86efac}
 .status-online::before{background:#22c55e}
 .status-offline{background:var(--surface-soft);color:#9aa7bb;border:1px solid var(--border)}
 .status-offline::before{background:#94a3b8}
 .policy-custom{background:var(--blue-soft);color:#1d4ed8}
-.policy-lock{background:var(--red-soft);color:#b91c1c}
+.policy-lock{background:var(--red-soft);color:#fda4af}
 .policy-live{background:var(--cyan-soft);color:#0e7490}
 .policy-demo{background:var(--amber-soft);color:#a16207}
 
@@ -164,12 +164,12 @@ a{text-decoration:none;color:inherit}
 .source-badge.live{background:var(--cyan-soft);border-color:#155e75;color:#0e7490}
 .state-text{display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:700}
 .state-text::before{content:"";width:6px;height:6px;border-radius:50%}
-.state-allowed{color:#15803d}
+.state-allowed{color:#86efac}
 .state-allowed::before{background:#22c55e}
-.state-blocked{color:#b91c1c}
+.state-blocked{color:#fda4af}
 .state-blocked::before{background:#ef4444}
 .remove-btn{width:30px;height:30px;border-radius:7px;border:1px solid var(--border);background:var(--surface);color:#6f8099;display:grid;place-items:center}
-.remove-btn:hover{color:#fda4af;border-color:#7f1d1d;background:#fff7f7}
+.remove-btn:hover{color:#fda4af;border-color:#7f1d1d;background:#30181d}
 .remove-btn svg{width:14px;height:14px}
 
 .activity-card{margin-top:16px}
