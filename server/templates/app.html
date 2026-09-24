@@ -3,238 +3,299 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#0a0b10">
+  <meta name="theme-color" content="#0f172a">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Kids Control">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="icon" href="/icon.svg">
   <link rel="stylesheet" href="/static/styles.css">
-  <title>Kids Control</title>
+  <title>Kids Control MDM</title>
 </head>
 <body class="app-body">
-  <div class="aurora aurora-a"></div>
-  <div class="aurora aurora-b"></div>
-
-  <div class="app-frame">
+  <div class="shell">
     <aside class="sidebar">
-      <button class="logo-button" onclick="showDashboard()" aria-label="Home">
-        <span class="logo-glyph">K</span>
-        <span class="logo-type">
+      <div class="brand">
+        <div class="brand-mark">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 5 6.5v5.7c0 4.1 2.8 7.5 7 8.8 4.2-1.3 7-4.7 7-8.8V6.5L12 3Z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <div class="brand-copy">
           <strong>Kids Control</strong>
-          <small>Family Hub</small>
-        </span>
-      </button>
+          <span>Device Management</span>
+        </div>
+      </div>
 
-      <nav class="side-nav">
-        <button class="nav-item active" id="navHome" onclick="showDashboard()">
-          <span class="nav-icon">⌂</span>
-          <span>Home</span>
+      <nav class="nav">
+        <button class="nav-link active" onclick="showDashboard()">
+          <svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg>
+          <span>Overview</span>
         </button>
-        <button class="nav-item" onclick="showDashboard()">
-          <span class="nav-icon">◉</span>
+        <button class="nav-link" onclick="showDashboard()">
+          <svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10 18h4"/></svg>
           <span>Devices</span>
         </button>
-        <button class="nav-item nav-disabled" title="Coming soon">
-          <span class="nav-icon">◷</span>
+        <button class="nav-link disabled" title="Coming soon">
+          <svg viewBox="0 0 24 24"><path d="M4 7h16v13H4z"/><path d="M8 3v4M16 3v4M4 11h16"/></svg>
           <span>Schedules</span>
-          <span class="soon">Soon</span>
+          <em>Soon</em>
+        </button>
+        <button class="nav-link disabled" title="Coming soon">
+          <svg viewBox="0 0 24 24"><path d="M12 3 5 6.5v5.7c0 4.1 2.8 7.5 7 8.8 4.2-1.3 7-4.7 7-8.8V6.5L12 3Z"/><path d="m9 12 2 2 4-4"/></svg>
+          <span>Policies</span>
+          <em>Soon</em>
         </button>
       </nav>
 
-      <div class="sidebar-bottom">
-        <div class="system-chip">
-          <span class="pulse-dot"></span>
+      <div class="sidebar-footer">
+        <div class="server-state">
+          <span class="server-dot"></span>
           <div>
-            <strong>Hub online</strong>
-            <small id="globalState">Checking…</small>
+            <strong>Server connected</strong>
+            <small id="globalState">Checking service…</small>
           </div>
         </div>
-        <a class="logout-link" href="/logout">
-          <span>↗</span>
+        <a href="/logout" class="signout-link">
+          <svg viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M14 4h5a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-5"/></svg>
           <span>Sign out</span>
         </a>
       </div>
     </aside>
 
-    <section class="workspace">
-      <header class="mobile-topbar">
-        <button class="mobile-brand" onclick="showDashboard()">
-          <span class="logo-glyph">K</span>
-          <strong>Kids Control</strong>
-        </button>
-        <span class="preview-pill">Preview</span>
+    <section class="main-panel">
+      <header class="mobile-header">
+        <div class="brand compact">
+          <div class="brand-mark">
+            <svg viewBox="0 0 24 24"><path d="M12 3 5 6.5v5.7c0 4.1 2.8 7.5 7 8.8 4.2-1.3 7-4.7 7-8.8V6.5L12 3Z"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
+          <div class="brand-copy"><strong>Kids Control</strong><span>MDM</span></div>
+        </div>
+        <span class="mobile-preview">Preview</span>
       </header>
 
-      <main id="dashboardView" class="screen">
-        <header class="dashboard-header">
+      <main id="dashboardView" class="page">
+        <header class="page-header">
           <div>
-            <span class="kicker">Family dashboard</span>
-            <h1>Everything under control.</h1>
-            <p>One tap to manage apps, downtime and device access.</p>
+            <div class="breadcrumb">Device Management / Overview</div>
+            <h1>Overview</h1>
+            <p>Monitor and manage all family devices from one place.</p>
           </div>
-          <div class="header-badge">
-            <span class="header-badge-dot"></span>
-            <span>Private family hub</span>
+          <div class="page-actions">
+            <button class="btn btn-secondary" onclick="loadDevices()">
+              <svg viewBox="0 0 24 24"><path d="M20 6v5h-5M4 18v-5h5"/><path d="M6.1 9A7 7 0 0 1 18.4 6L20 11M4 13l1.6 5A7 7 0 0 0 18 15"/></svg>
+              Refresh
+            </button>
           </div>
         </header>
 
-        <section class="summary-row">
-          <article class="summary-card summary-primary">
-            <span class="summary-icon">◉</span>
-            <div>
-              <strong id="totalDevices">0</strong>
-              <span>Devices</span>
+        <section class="metric-grid">
+          <article class="metric-card">
+            <div class="metric-icon blue">
+              <svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10 18h4"/></svg>
             </div>
+            <div class="metric-copy"><span>Managed devices</span><strong id="totalDevices">0</strong></div>
           </article>
-          <article class="summary-card">
-            <span class="summary-icon">⌁</span>
-            <div>
-              <strong id="onlineCount">0</strong>
-              <span>Helpers online</span>
+          <article class="metric-card">
+            <div class="metric-icon green">
+              <svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>
             </div>
+            <div class="metric-copy"><span>Helpers online</span><strong id="onlineCount">0</strong></div>
           </article>
-          <article class="summary-card">
-            <span class="summary-icon">⛌</span>
-            <div>
-              <strong id="blockedCount">0</strong>
-              <span>Blocked now</span>
+          <article class="metric-card">
+            <div class="metric-icon red">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8.5 8.5 7 7M15.5 8.5l-7 7"/></svg>
             </div>
+            <div class="metric-copy"><span>Blocked controls</span><strong id="blockedCount">0</strong></div>
           </article>
-          <article class="summary-card">
-            <span class="summary-icon">✓</span>
-            <div>
-              <strong id="liveControlsCount">0</strong>
-              <span>Live controls</span>
+          <article class="metric-card">
+            <div class="metric-icon cyan">
+              <svg viewBox="0 0 24 24"><path d="M12 3 5 6.5v5.7c0 4.1 2.8 7.5 7 8.8 4.2-1.3 7-4.7 7-8.8V6.5L12 3Z"/><path d="m9 12 2 2 4-4"/></svg>
             </div>
+            <div class="metric-copy"><span>Live controls</span><strong id="liveControlsCount">0</strong></div>
           </article>
         </section>
 
-        <section class="family-section">
-          <div class="section-title-row">
+        <section class="content-card">
+          <div class="card-header">
             <div>
-              <span class="kicker">Your family</span>
-              <h2>Choose a device</h2>
+              <h2>Managed devices</h2>
+              <p>Device status, policy mode and recent check-in.</p>
             </div>
-            <span class="section-hint">Tap a card to manage</span>
+            <span class="count-badge" id="deviceCountBadge">0 devices</span>
           </div>
 
-          <div class="device-grid" id="deviceGrid"></div>
+          <div class="device-table-wrap">
+            <table class="device-table">
+              <thead>
+                <tr>
+                  <th>Device</th>
+                  <th>Management</th>
+                  <th>Policy</th>
+                  <th>Restrictions</th>
+                  <th>Last check-in</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="deviceTableBody"></tbody>
+            </table>
+          </div>
+
+          <div class="device-mobile-list" id="deviceMobileList"></div>
         </section>
 
-        <section class="setup-note">
-          <div class="setup-icon">✦</div>
-          <div class="setup-copy">
-            <strong>Native helper is the final piece</strong>
-            <p>For now, demo controls update the hub only. Once TestFlight is ready, Live controls will apply Apple shields directly on each iPad.</p>
+        <section class="deployment-card">
+          <div class="deployment-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 3 5 6.5v5.7c0 4.1 2.8 7.5 7 8.8 4.2-1.3 7-4.7 7-8.8V6.5L12 3Z"/><path d="M12 8v5M12 17h.01"/></svg>
           </div>
-          <span class="setup-tag">Apple helper pending</span>
+          <div>
+            <strong>Native iPad helper not deployed yet</strong>
+            <p>The dashboard is ready. Live enforcement starts once the signed helper is installed through TestFlight.</p>
+          </div>
+          <span class="neutral-badge">Deployment pending</span>
         </section>
       </main>
 
-      <main id="deviceView" class="screen hidden">
-        <div class="device-pagebar">
-          <button class="round-back" onclick="showDashboard()" aria-label="Back">‹</button>
+      <main id="deviceView" class="page hidden">
+        <header class="page-header device-page-header">
           <div>
-            <span class="kicker">Device controls</span>
+            <button class="text-back" onclick="showDashboard()">
+              <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+              Devices
+            </button>
+            <div class="breadcrumb">Device Management / Device</div>
             <h1 id="deviceName">Device</h1>
-          </div>
-          <button class="ghost-action" onclick="refreshSelected()">↻ <span>Refresh</span></button>
-        </div>
-
-        <section class="device-hero" id="deviceHero">
-          <div class="device-hero-main">
-            <div class="device-avatar" id="deviceAvatar">N</div>
-            <div class="device-hero-copy">
-              <div class="device-online-row">
-                <span class="status-dot" id="statusDot"></span>
-                <span id="deviceStatus">Helper offline</span>
-              </div>
-              <div class="device-state-line">
-                <span class="state-chip" id="deviceEyebrow">Device</span>
-                <span class="state-chip muted-state">Revision <b id="revisionText">0</b></span>
-              </div>
+            <div class="device-status-inline">
+              <span class="status-dot" id="statusDot"></span>
+              <span id="deviceStatus">Helper offline</span>
             </div>
           </div>
 
-          <div class="device-actions">
-            <button class="hero-action hero-action-dark" onclick="createPairCode()">
-              <span class="action-symbol">⌁</span>
-              <span><b>Pair helper</b><small>Connect this iPad</small></span>
+          <div class="page-actions device-toolbar">
+            <button class="btn btn-secondary" onclick="refreshSelected()">
+              <svg viewBox="0 0 24 24"><path d="M20 6v5h-5M4 18v-5h5"/><path d="M6.1 9A7 7 0 0 1 18.4 6L20 11M4 13l1.6 5A7 7 0 0 0 18 15"/></svg>
+              Refresh
             </button>
-            <button class="hero-action hero-action-danger" onclick="setBlockAll(true)">
-              <span class="action-symbol">■</span>
-              <span><b>Block all</b><small>Lock apps now</small></span>
-            </button>
-            <button class="hero-action hero-action-success" onclick="setBlockAll(false)">
-              <span class="action-symbol">✓</span>
-              <span><b>Allow all</b><small>Clear all blocks</small></span>
+            <button class="btn btn-primary" onclick="createPairCode()">
+              <svg viewBox="0 0 24 24"><path d="M8 12h8M12 8v8"/><rect x="3" y="4" width="18" height="16" rx="3"/></svg>
+              Pair helper
             </button>
           </div>
+        </header>
+
+        <section class="device-overview-grid">
+          <article class="device-identity-card">
+            <div class="device-identity-icon" id="deviceAvatar">N</div>
+            <div>
+              <span class="meta-label">Device</span>
+              <strong id="deviceIdentityName">iPad</strong>
+              <small>Apple iPad</small>
+            </div>
+          </article>
+
+          <article class="info-card">
+            <span class="meta-label">Management status</span>
+            <div class="info-value-row">
+              <span class="status-dot" id="managementDot"></span>
+              <strong id="managementStatus">Not paired</strong>
+            </div>
+            <small>Native helper connectivity</small>
+          </article>
+
+          <article class="info-card">
+            <span class="meta-label">Current policy</span>
+            <strong id="deviceModeLabel">Custom</strong>
+            <small id="masterCopy">Individual controls are active.</small>
+          </article>
+
+          <article class="info-card">
+            <span class="meta-label">Configuration revision</span>
+            <strong id="revisionText">0</strong>
+            <small>Desired-state version</small>
+          </article>
         </section>
 
-        <section class="master-status">
+        <section class="action-strip">
           <div>
-            <span class="master-orb"></span>
-            <div>
-              <span class="kicker">Current mode</span>
-              <h3 id="masterTitle">Everything available</h3>
-              <p id="masterCopy">Individual controls are active.</p>
-            </div>
+            <span class="meta-label">Quick actions</span>
+            <h3 id="masterTitle">Everything available</h3>
           </div>
-          <span class="mode-pill" id="deviceModeLabel">Custom</span>
+          <div class="action-strip-buttons">
+            <button class="btn btn-danger" onclick="setBlockAll(true)">
+              <svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+              Block all
+            </button>
+            <button class="btn btn-success" onclick="setBlockAll(false)">
+              <svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>
+              Allow all
+            </button>
+          </div>
         </section>
 
-        <section class="apps-section">
-          <div class="section-title-row">
+        <section class="content-card">
+          <div class="card-header">
             <div>
-              <span class="kicker">Apps & groups</span>
-              <h2>Controls</h2>
+              <h2>Application restrictions</h2>
+              <p>Manage allowed and blocked applications for this device.</p>
             </div>
-            <span class="control-total"><b id="controlCount">0</b> controls</span>
+            <span class="count-badge"><b id="controlCount">0</b> controls</span>
           </div>
 
-          <div class="controls-list" id="controlsList"></div>
+          <div class="controls-table-wrap">
+            <table class="controls-table">
+              <thead>
+                <tr>
+                  <th>Application</th>
+                  <th>Source</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="controlsList"></tbody>
+            </table>
+          </div>
+          <div class="controls-mobile-list" id="controlsMobileList"></div>
         </section>
 
-        <section class="activity-section">
-          <div class="section-title-row">
+        <section class="content-card activity-card">
+          <div class="card-header">
             <div>
-              <span class="kicker">History</span>
-              <h2>Recent activity</h2>
+              <h2>Activity log</h2>
+              <p>Recent changes and management events.</p>
             </div>
           </div>
-          <div class="activity-list" id="auditList"></div>
+          <div id="auditList" class="audit-list"></div>
         </section>
       </main>
     </section>
   </div>
 
   <nav class="mobile-nav">
-    <button class="mobile-nav-item active" onclick="showDashboard()">
-      <span>⌂</span>
-      <small>Home</small>
+    <button class="mobile-nav-link active" onclick="showDashboard()">
+      <svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg>
+      <span>Overview</span>
     </button>
-    <button class="mobile-nav-item" onclick="showDashboard()">
-      <span>◉</span>
-      <small>Devices</small>
+    <button class="mobile-nav-link" onclick="showDashboard()">
+      <svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M10 18h4"/></svg>
+      <span>Devices</span>
     </button>
-    <button class="mobile-nav-item nav-disabled">
-      <span>◷</span>
-      <small>Schedules</small>
+    <button class="mobile-nav-link disabled">
+      <svg viewBox="0 0 24 24"><path d="M4 7h16v13H4z"/><path d="M8 3v4M16 3v4M4 11h16"/></svg>
+      <span>Schedules</span>
     </button>
   </nav>
 
-  <div class="modal-wrap hidden" id="pairModal" onclick="closePairModal(event)">
-    <div class="pair-sheet" onclick="event.stopPropagation()">
-      <button class="sheet-close" onclick="closePairModal()">×</button>
-      <div class="pair-symbol">⌁</div>
-      <span class="kicker">Native helper</span>
+  <div class="modal-backdrop hidden" id="pairModal" onclick="closePairModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closePairModal()">×</button>
+      <div class="modal-icon">
+        <svg viewBox="0 0 24 24"><path d="M8 12h8M12 8v8"/><rect x="3" y="4" width="18" height="16" rx="3"/></svg>
+      </div>
+      <span class="modal-label">Device enrollment</span>
       <h2 id="pairDeviceName">Pair device</h2>
-      <p>Open Kids Control on the child iPad and enter this one-time code.</p>
+      <p>Open Kids Control on the child iPad and enter the one-time enrollment code below.</p>
       <div class="pair-code" id="pairCode">••••••</div>
-      <span class="pair-expiry">Expires in 10 minutes</span>
-      <button class="sheet-primary" onclick="copyPairCode()">Copy pairing code</button>
+      <div class="pair-expiry">Code expires in 10 minutes</div>
+      <button class="btn btn-primary modal-copy" onclick="copyPairCode()">Copy code</button>
     </div>
   </div>
 
