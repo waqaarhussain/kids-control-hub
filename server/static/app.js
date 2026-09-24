@@ -102,8 +102,10 @@ function renderDashboard() {
         ? "Ready for helper reconnect"
         : "Ready for helper pairing";
 
+    const themeClass = device.id === "inaara" ? "theme-inaara" : "theme-nevaeh";
+
     return `
-      <button class="device-card" onclick="openDevice('${device.id}')">
+      <button class="device-card ${themeClass}" onclick="openDevice('${device.id}')">
         <div class="device-card-head">
           <div class="device-badge">${esc(device.avatar)}</div>
           ${helperChip(device)}
@@ -156,8 +158,13 @@ function renderSelected() {
 
   document.getElementById("deviceAvatar").textContent = d.avatar;
   document.getElementById("deviceName").textContent = d.name;
+
+  const hero = document.getElementById("deviceHero");
+  hero.classList.remove("theme-nevaeh", "theme-inaara");
+  hero.classList.add(d.id === "inaara" ? "theme-inaara" : "theme-nevaeh");
   document.getElementById("deviceEyebrow").textContent = d.block_all ? "Lockdown active" : "Device";
-  document.getElementById("deviceModeLabel").textContent = d.block_all ? "Lockdown" : "Custom";
+  document.getElementById("deviceModeLabel").textContent =
+    d.block_all ? "Lockdown" : d.controls.some(control => control.live) ? "Live" : "Custom";
   document.getElementById("revisionText").textContent = String(d.revision);
 
   const dot = document.getElementById("statusDot");
@@ -208,8 +215,8 @@ function controlCardHTML(control) {
         <h3>${esc(control.name)}</h3>
         <p>
           ${control.live
-            ? "This control is linked to the native helper and can apply Apple's shield UI on-device."
-            : "This is a demo control for dashboard testing only. It changes desired state, not the physical iPad."}
+            ? "Connected to the native helper and ready to apply an Apple shield."
+            : "Preview control. It will become enforceable once the helper is paired."}
         </p>
       </div>
 
