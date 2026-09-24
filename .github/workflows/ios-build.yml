@@ -1,0 +1,32 @@
+name: iOS compile check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: xcode-27
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate Xcode project
+        working-directory: ios
+        run: xcodegen generate
+      - name: Show Xcode version
+        run: xcodebuild -version
+      - name: Compile without signing
+        working-directory: ios
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -project KidsControl.xcodeproj \
+            -scheme KidsControl \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO \
+            build
