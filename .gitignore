@@ -1,0 +1,9 @@
+.DS_Store
+*.xcuserstate
+xcuserdata/
+DerivedData/
+*.p12
+*.mobileprovision
+AuthKey_*.p8
+server/data/
+.env
