@@ -1,25 +1,67 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#07090d">
-<link rel="manifest" href="/manifest.webmanifest">
-<link rel="icon" href="/icon.svg">
-<link rel="stylesheet" href="/static/styles.css">
-<title>Kids Control</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0a0b10">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icon.svg">
+  <link rel="stylesheet" href="/static/styles.css">
+  <title>Kids Control</title>
 </head>
-<body class="login-body">
-  <main class="login-card glass">
-    <div class="brand-row"><span class="brand-mark">✓</span><div><b>Kids Control</b><small>Parent command centre</small></div></div>
-    <h1>Control without the chaos.</h1>
-    <p class="muted">One place for app shields, lockdowns and your kids' devices.</p>
-    {% if error %}<div class="error">{{ error }}</div>{% endif %}
-    <form method="post">
-      <label>Username</label><input name="username" autocomplete="username" required>
-      <label>Password</label><input name="password" type="password" autocomplete="current-password" required>
-      <button class="primary" type="submit">Open dashboard</button>
-    </form>
+<body class="login-page">
+  <div class="login-glow login-glow-a"></div>
+  <div class="login-glow login-glow-b"></div>
+
+  <main class="login-shell">
+    <section class="login-brand-panel">
+      <div class="login-brand">
+        <span class="logo-glyph login-logo">K</span>
+        <div>
+          <strong>Kids Control</strong>
+          <small>Family Hub</small>
+        </div>
+      </div>
+
+      <div class="login-message">
+        <span class="kicker">Private family control</span>
+        <h1>Less arguing.<br>More <span>control.</span></h1>
+        <p>Apps, blocks and family devices in one simple place.</p>
+      </div>
+
+      <div class="login-feature-row">
+        <div><span>✓</span><small>One-tap blocks</small></div>
+        <div><span>⌁</span><small>Remote controls</small></div>
+        <div><span>◉</span><small>Family devices</small></div>
+      </div>
+    </section>
+
+    <section class="login-form-panel">
+      <div class="login-form-wrap">
+        <span class="login-eyebrow">Welcome back</span>
+        <h2>Open your family hub</h2>
+        <p>Sign in to manage your devices.</p>
+
+        {% if error %}<div class="login-error">{{ error }}</div>{% endif %}
+
+        <form method="post" class="login-form">
+          <label>
+            <span>Username</span>
+            <input name="username" autocomplete="username" required>
+          </label>
+          <label>
+            <span>Password</span>
+            <input name="password" type="password" autocomplete="current-password" required>
+          </label>
+          <button type="submit">Continue</button>
+        </form>
+
+        <div class="login-private">
+          <span>●</span>
+          <small>Private self-hosted dashboard</small>
+        </div>
+      </div>
+    </section>
   </main>
 </body>
 </html>
