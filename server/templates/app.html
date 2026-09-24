@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#0b1020">
+  <meta name="theme-color" content="#0a0b10">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Kids Control">
@@ -12,165 +12,233 @@
   <link rel="stylesheet" href="/static/styles.css">
   <title>Kids Control</title>
 </head>
-<body>
-  <div class="bg-orb orb-1"></div>
-  <div class="bg-orb orb-2"></div>
-  <div class="bg-grid"></div>
+<body class="app-body">
+  <div class="aurora aurora-a"></div>
+  <div class="aurora aurora-b"></div>
 
-  <div class="app-shell">
-    <header class="topbar">
-      <button class="brand" onclick="showDashboard()">
-        <span class="brand-logo">✓</span>
-        <span class="brand-copy">
+  <div class="app-frame">
+    <aside class="sidebar">
+      <button class="logo-button" onclick="showDashboard()" aria-label="Home">
+        <span class="logo-glyph">K</span>
+        <span class="logo-type">
           <strong>Kids Control</strong>
-          <small>Family command centre</small>
+          <small>Family Hub</small>
         </span>
       </button>
 
-      <div class="topbar-right">
-        <span class="badge badge-preview">Preview</span>
-        <a class="icon-btn" href="/logout" title="Log out">↗</a>
+      <nav class="side-nav">
+        <button class="nav-item active" id="navHome" onclick="showDashboard()">
+          <span class="nav-icon">⌂</span>
+          <span>Home</span>
+        </button>
+        <button class="nav-item" onclick="showDashboard()">
+          <span class="nav-icon">◉</span>
+          <span>Devices</span>
+        </button>
+        <button class="nav-item nav-disabled" title="Coming soon">
+          <span class="nav-icon">◷</span>
+          <span>Schedules</span>
+          <span class="soon">Soon</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="system-chip">
+          <span class="pulse-dot"></span>
+          <div>
+            <strong>Hub online</strong>
+            <small id="globalState">Checking…</small>
+          </div>
+        </div>
+        <a class="logout-link" href="/logout">
+          <span>↗</span>
+          <span>Sign out</span>
+        </a>
       </div>
-    </header>
+    </aside>
 
-    <main id="dashboardView" class="view">
-      <section class="hero-panel glass">
-        <div class="hero-copy">
-          <div class="eyebrow">Family overview</div>
-          <h1>Control the kids’ iPads without the Settings maze.</h1>
-          <p>
-            Pick a device, block one app, or lock everything instantly.
-            Once the native helper is live, controls marked <b>Live</b> enforce Apple shields.
-          </p>
-        </div>
+    <section class="workspace">
+      <header class="mobile-topbar">
+        <button class="mobile-brand" onclick="showDashboard()">
+          <span class="logo-glyph">K</span>
+          <strong>Kids Control</strong>
+        </button>
+        <span class="preview-pill">Preview</span>
+      </header>
 
-        <div class="hero-stats">
-          <div class="stat-card">
-            <span class="stat-label">Devices</span>
-            <strong class="stat-value" id="totalDevices">0</strong>
+      <main id="dashboardView" class="screen">
+        <header class="dashboard-header">
+          <div>
+            <span class="kicker">Family dashboard</span>
+            <h1>Everything under control.</h1>
+            <p>One tap to manage apps, downtime and device access.</p>
           </div>
-          <div class="stat-card">
-            <span class="stat-label">Blocked now</span>
-            <strong class="stat-value" id="blockedCount">0</strong>
+          <div class="header-badge">
+            <span class="header-badge-dot"></span>
+            <span>Private family hub</span>
           </div>
-          <div class="stat-card">
-            <span class="stat-label">Live controls</span>
-            <strong class="stat-value" id="liveControlsCount">0</strong>
-          </div>
-          <div class="stat-card">
-            <span class="stat-label">Helpers online</span>
-            <strong class="stat-value" id="onlineCount">0</strong>
-          </div>
-        </div>
-      </section>
+        </header>
 
-      <section class="info-banner glass">
-        <div class="info-banner-icon">i</div>
-        <div class="info-banner-copy">
-          <strong>Native helper pending</strong>
-          <span>
-            Demo controls only change desired state. When the helper is installed, Live controls apply
-            Apple Screen Time shields without hiding or shuffling app icons.
-          </span>
-        </div>
-        <div class="info-banner-pill" id="globalState">Loading…</div>
-      </section>
-
-      <section class="section-head">
-        <div>
-          <div class="eyebrow">Devices</div>
-          <h2>Your family devices</h2>
-        </div>
-      </section>
-
-      <section class="device-grid" id="deviceGrid"></section>
-    </main>
-
-    <main id="deviceView" class="view hidden">
-      <section class="device-layout">
-        <aside class="device-sidebar">
-          <div class="device-summary glass">
-            <button class="back-btn" onclick="showDashboard()">‹ Back</button>
-
-            <div class="device-avatar-wrap">
-              <div class="device-avatar" id="deviceAvatar">N</div>
-            </div>
-
-            <div class="eyebrow" id="deviceEyebrow">Device</div>
-            <h1 class="device-name" id="deviceName">Device</h1>
-
-            <div class="device-status-line">
-              <span class="status-dot" id="statusDot"></span>
-              <span id="deviceStatus">Helper offline</span>
-            </div>
-
-            <div class="device-quick-stats">
-              <div>
-                <span>Mode</span>
-                <strong id="deviceModeLabel">Custom</strong>
-              </div>
-              <div>
-                <span>Revision</span>
-                <strong id="revisionText">0</strong>
-              </div>
-            </div>
-
-            <div class="sidebar-actions">
-              <button class="btn btn-primary" onclick="createPairCode()">Pair helper</button>
-              <button class="btn btn-secondary" onclick="refreshSelected()">Sync state</button>
-            </div>
-          </div>
-
-          <div class="master-panel glass">
-            <div class="eyebrow">Master control</div>
-            <h3 id="masterTitle">Everything available</h3>
-            <p id="masterCopy">Individual controls are active.</p>
-            <div class="master-actions">
-              <button class="btn btn-danger" onclick="setBlockAll(true)">Block all</button>
-              <button class="btn btn-success" onclick="setBlockAll(false)">Allow all</button>
-            </div>
-          </div>
-        </aside>
-
-        <section class="device-main">
-          <div class="controls-header">
+        <section class="summary-row">
+          <article class="summary-card summary-primary">
+            <span class="summary-icon">◉</span>
             <div>
-              <div class="eyebrow">Controls</div>
-              <h2>Apps and groups</h2>
+              <strong id="totalDevices">0</strong>
+              <span>Devices</span>
             </div>
-            <div class="count-pill"><span id="controlCount">0</span> controls</div>
-          </div>
-
-          <section class="controls-list" id="controlsList"></section>
-
-          <div class="section-head section-head-tight">
+          </article>
+          <article class="summary-card">
+            <span class="summary-icon">⌁</span>
             <div>
-              <div class="eyebrow">Activity</div>
-              <h2>Recent changes</h2>
+              <strong id="onlineCount">0</strong>
+              <span>Helpers online</span>
             </div>
-          </div>
-
-          <section class="audit-list glass" id="auditList"></section>
+          </article>
+          <article class="summary-card">
+            <span class="summary-icon">⛌</span>
+            <div>
+              <strong id="blockedCount">0</strong>
+              <span>Blocked now</span>
+            </div>
+          </article>
+          <article class="summary-card">
+            <span class="summary-icon">✓</span>
+            <div>
+              <strong id="liveControlsCount">0</strong>
+              <span>Live controls</span>
+            </div>
+          </article>
         </section>
-      </section>
-    </main>
+
+        <section class="family-section">
+          <div class="section-title-row">
+            <div>
+              <span class="kicker">Your family</span>
+              <h2>Choose a device</h2>
+            </div>
+            <span class="section-hint">Tap a card to manage</span>
+          </div>
+
+          <div class="device-grid" id="deviceGrid"></div>
+        </section>
+
+        <section class="setup-note">
+          <div class="setup-icon">✦</div>
+          <div class="setup-copy">
+            <strong>Native helper is the final piece</strong>
+            <p>For now, demo controls update the hub only. Once TestFlight is ready, Live controls will apply Apple shields directly on each iPad.</p>
+          </div>
+          <span class="setup-tag">Apple helper pending</span>
+        </section>
+      </main>
+
+      <main id="deviceView" class="screen hidden">
+        <div class="device-pagebar">
+          <button class="round-back" onclick="showDashboard()" aria-label="Back">‹</button>
+          <div>
+            <span class="kicker">Device controls</span>
+            <h1 id="deviceName">Device</h1>
+          </div>
+          <button class="ghost-action" onclick="refreshSelected()">↻ <span>Refresh</span></button>
+        </div>
+
+        <section class="device-hero" id="deviceHero">
+          <div class="device-hero-main">
+            <div class="device-avatar" id="deviceAvatar">N</div>
+            <div class="device-hero-copy">
+              <div class="device-online-row">
+                <span class="status-dot" id="statusDot"></span>
+                <span id="deviceStatus">Helper offline</span>
+              </div>
+              <div class="device-state-line">
+                <span class="state-chip" id="deviceEyebrow">Device</span>
+                <span class="state-chip muted-state">Revision <b id="revisionText">0</b></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="device-actions">
+            <button class="hero-action hero-action-dark" onclick="createPairCode()">
+              <span class="action-symbol">⌁</span>
+              <span><b>Pair helper</b><small>Connect this iPad</small></span>
+            </button>
+            <button class="hero-action hero-action-danger" onclick="setBlockAll(true)">
+              <span class="action-symbol">■</span>
+              <span><b>Block all</b><small>Lock apps now</small></span>
+            </button>
+            <button class="hero-action hero-action-success" onclick="setBlockAll(false)">
+              <span class="action-symbol">✓</span>
+              <span><b>Allow all</b><small>Clear all blocks</small></span>
+            </button>
+          </div>
+        </section>
+
+        <section class="master-status">
+          <div>
+            <span class="master-orb"></span>
+            <div>
+              <span class="kicker">Current mode</span>
+              <h3 id="masterTitle">Everything available</h3>
+              <p id="masterCopy">Individual controls are active.</p>
+            </div>
+          </div>
+          <span class="mode-pill" id="deviceModeLabel">Custom</span>
+        </section>
+
+        <section class="apps-section">
+          <div class="section-title-row">
+            <div>
+              <span class="kicker">Apps & groups</span>
+              <h2>Controls</h2>
+            </div>
+            <span class="control-total"><b id="controlCount">0</b> controls</span>
+          </div>
+
+          <div class="controls-list" id="controlsList"></div>
+        </section>
+
+        <section class="activity-section">
+          <div class="section-title-row">
+            <div>
+              <span class="kicker">History</span>
+              <h2>Recent activity</h2>
+            </div>
+          </div>
+          <div class="activity-list" id="auditList"></div>
+        </section>
+      </main>
+    </section>
   </div>
 
+  <nav class="mobile-nav">
+    <button class="mobile-nav-item active" onclick="showDashboard()">
+      <span>⌂</span>
+      <small>Home</small>
+    </button>
+    <button class="mobile-nav-item" onclick="showDashboard()">
+      <span>◉</span>
+      <small>Devices</small>
+    </button>
+    <button class="mobile-nav-item nav-disabled">
+      <span>◷</span>
+      <small>Schedules</small>
+    </button>
+  </nav>
+
   <div class="modal-wrap hidden" id="pairModal" onclick="closePairModal(event)">
-    <div class="modal glass" onclick="event.stopPropagation()">
-      <button class="modal-close" onclick="closePairModal()">×</button>
-      <div class="modal-icon">⌁</div>
-      <div class="eyebrow">Pair helper</div>
+    <div class="pair-sheet" onclick="event.stopPropagation()">
+      <button class="sheet-close" onclick="closePairModal()">×</button>
+      <div class="pair-symbol">⌁</div>
+      <span class="kicker">Native helper</span>
       <h2 id="pairDeviceName">Pair device</h2>
-      <p>Open Kids Control on the child iPad and enter this code.</p>
+      <p>Open Kids Control on the child iPad and enter this one-time code.</p>
       <div class="pair-code" id="pairCode">••••••</div>
-      <div class="modal-sub">Valid for 10 minutes</div>
-      <button class="btn btn-primary btn-wide" onclick="copyPairCode()">Copy code</button>
+      <span class="pair-expiry">Expires in 10 minutes</span>
+      <button class="sheet-primary" onclick="copyPairCode()">Copy pairing code</button>
     </div>
   </div>
 
   <div class="toast" id="toast"></div>
-
   <script src="/static/app.js"></script>
 </body>
 </html>
